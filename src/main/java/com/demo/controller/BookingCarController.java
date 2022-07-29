@@ -50,10 +50,10 @@ public class BookingCarController {
         return carInfoOperateService.carBooking(carBookingDO);
     }
 
-    @RequestMapping("/car/cancelBooking")
+    /*@RequestMapping("/car/cancelBooking")
     @ResponseBody
     @ApiOperation(value="CANCEL CAR BOOKING",httpMethod="POST",notes="This method is used to cancel the order and rollback the inventory")
     public Result cancelcarBooking(@RequestBody @ApiParam(name="the order no",value="input the json format",required=true) String orderNo){
         return carInfoOperateService.cancelCarBooking(orderNo);
-    }
+    }*/
 }
