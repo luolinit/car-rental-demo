@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.demo.dao.CarOrderMapper">
+
+
+    <insert id="createCarBookingOrder" parameterType="com.demo.dao.po.CarOrderPO" keyProperty="id">
+        INSERT INTO  car_order
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="orderNo!=null and ''!=orderNo">
+                order_no,
+            </if>
+            <if test="carNo!=null and ''!=carNo">
+                car_no,
+            </if>
+            <if test="pickUpTime!=null and ''!=pickUpTime">
+                pick_up_time,
+            </if>
+            <if test="returnTime!=null and ''!=returnTime">
+                return_time,
+            </if>
+            <if test="contactPhone!=null and ''!=contactPhone">
+                contact_phone,
+            </if>
+            <if test="customerName!=null and ''!=customerName">
+                customer_name,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="orderNo!=null and ''!=orderNo">
+                #{orderNo},
+            </if>
+            <if test="carNo!=null and ''!=carNo">
+                #{carNo},
+            </if>
+            <if test="pickUpTime!=null and ''!=pickUpTime">
+                #{pickUpTime},
+            </if>
+            <if test="returnTime!=null and ''!=returnTime">
+                #{returnTime},
+            </if>
+            <if test="contactPhone!=null and ''!=contactPhone">
+                #{contactPhone},
+            </if>
+            <if test="customerName!=null and ''!=customerName">
+                #{customerName},
+            </if>
+        </trim>
+    </insert>
+
+
+</mapper>

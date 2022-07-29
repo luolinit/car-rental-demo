@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.demo.dao.CarInvDetailMapper">
+
+
+    <update id="occupyCarInv" parameterType="List">
+        UPDATE car_inv_detail
+        <set>
+            <if test="list == null">
+                error
+            </if>
+            total_quantity=(
+            CASE
+            <foreach collection="list" item="item" index="index"
+                     separator=" ">
+                WHEN combine_key=#{item.combineKey}
+                THEN
+                total_quantity-#{item.occupiedQty}
+            </foreach>
+            ELSE total_quantity
+            END
+            )
+        </set>
+        <where>
+            1=1
+            and (CASE
+            <foreach collection="list" item="item" index="index"
+                     separator=" ">
+                WHEN combine_key=#{item.combineKey} THEN
+                <![CDATA[
+            total_quantity-#{item.occupiedQty}>=0
+            ]]>
+            </foreach>
+            END)
+        </where>
+    </update>
+
+    <resultMap type="com.demo.dao.po.CarInvDetailPO" id="car_inv_info_result">
+        <result property="carModelId" column="car_model_id"/>
+        <result property="dailyDate" column="daily_date"/>
+        <result property="totalQuantity" column="total_quantity"/>
+        <result property="combineKey" column="combine_key"/>
+    </resultMap>
+
+    <sql id ="car_inv_info_column">
+        car_model_id,daily_date,total_quantity,combine_key
+    </sql>
+
+
+    <select id="queryCarInvListByCombineKey" resultMap="car_inv_info_result" parameterType="list">
+        SELECT
+        <include refid="car_inv_info_column" />
+        FROM car_inv_detail
+        where
+        combine_key in
+        <foreach collection="list" open="(" separator="," close=")" item="combineKey">
+            #{combineKey}
+        </foreach>
+    </select>
+
+
+</mapper>
