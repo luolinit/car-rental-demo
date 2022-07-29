@@ -35,7 +35,7 @@ public class SwaggerConfig {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("Car Rental System Design and Implementation Project")
+                .title("Car Rental System Project")
                 .description("")
                 .version("1.0.0")
                 .termsOfServiceUrl("")

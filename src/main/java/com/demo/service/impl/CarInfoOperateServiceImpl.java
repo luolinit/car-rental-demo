@@ -78,7 +78,7 @@ public class CarInfoOperateServiceImpl implements CarInfoOperateService {
             }
             List<String> combineKeys= assemblyInvQueryCombineKeys(carBookingDO);
             List<CarInvDetailPO> carInvDetailPOS=carInvDetailMapper.queryCarInvListByCombineKey(combineKeys);
-            if(CollectionUtils.isEmpty(carInvDetailPOS)){
+            if(CollectionUtils.isEmpty(carInvDetailPOS) || !(carInvDetailPOS.size()==combineKeys.size())){
                 return ResultUtil.fail(DATE_NOT_AVAILABILITY);
             }
             for(CarInvDetailPO carInvDetailPO:carInvDetailPOS){
@@ -132,6 +132,35 @@ public class CarInfoOperateServiceImpl implements CarInfoOperateService {
     public Result cancelCarBooking(String orderNo) {
         //TODO
         return null;
+    }
+
+    /**
+     * init the inv for test
+     * @param carBookingDO
+     * @return
+     */
+    @Override
+    public Result initCarInv(CarBookingDO carBookingDO) {
+        try {
+            List<String> dates=getBetweenDate(carBookingDO.getPickUpTime(), carBookingDO.getReturnTime());
+            List<CarModelInfoPO> demoCarInfoPOS= carInfoMapper.queryAllCarModelInfo();
+            List<CarInvDetailPO> carInvDetailPOS=new ArrayList<>();
+            for(CarModelInfoPO carModelInfoPO:demoCarInfoPOS){
+                for(String date:dates) {
+                    CarInvDetailPO carInvDetailPO = new CarInvDetailPO();
+                    carInvDetailPO.setCarModelId(carModelInfoPO.getCarModelId());
+                    carInvDetailPO.setDailyDate(date);
+                    carInvDetailPO.setCombineKey(carInvDetailPO.getCarModelId()+carInvDetailPO.getDailyDate());
+                    carInvDetailPO.setTotalQuantity(carBookingDO.getBookingQty());
+                    carInvDetailPOS.add(carInvDetailPO);
+                }
+            }
+            carInvDetailMapper.batchInsertInv(carInvDetailPOS);
+        } catch (Exception e) {
+            LOGGER.error("initCarInv exception:",e);
+            return ResultUtil.fail(ErrorCodeEnum.SYSTEM_EXCEPTION);
+        }
+        return ResultUtil.success();
     }
 
 

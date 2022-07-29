@@ -22,4 +22,6 @@ public interface CarInvDetailMapper {
      * @return the record of updated
      */
     int occupyCarInv(List<CarInvOperatePO> carInvOperatePOs);
+
+    void batchInsertInv(List<CarInvDetailPO> carInvDetailPOS);
 }

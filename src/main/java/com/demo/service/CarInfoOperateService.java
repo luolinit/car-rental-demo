@@ -20,4 +20,6 @@ public interface CarInfoOperateService {
 
     Result cancelCarBooking(String orderNo);
 
+    Result initCarInv(CarBookingDO carBookingDO);
+
 }

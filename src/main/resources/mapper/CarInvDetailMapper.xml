@@ -60,4 +60,25 @@
     </select>
 
 
+
+    <insert id="batchInsertInv" parameterType="List">
+        insert into car_inv_detail (
+        car_model_id,
+        daily_date,
+        total_quantity,
+        combine_key
+        )
+        values
+        <foreach collection="list" item="item" index="index"
+                 separator=",">
+            (
+            #{item.carModelId},
+            #{item.dailyDate},
+            #{item.totalQuantity},
+            #{item.combineKey}
+            )
+        </foreach>
+    </insert>
+
+
 </mapper>

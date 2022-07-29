@@ -23,8 +23,8 @@ import javax.servlet.http.HttpServletRequest;
  * @date 2022 07-26 16:20.
  */
 @Controller
-@Api(value="booking car",description="This API enables its users to get our company cars related information and send bookings to it. ")
-public class BookingCarController {
+@Api(value="car booking",description="This API enables its users to get our company cars related information and send bookings to it. ")
+public class CarBookingController {
     @Resource
     private CarInfoOperateService carInfoOperateService;
 
@@ -56,4 +56,12 @@ public class BookingCarController {
     public Result cancelcarBooking(@RequestBody @ApiParam(name="the order no",value="input the json format",required=true) String orderNo){
         return carInfoOperateService.cancelCarBooking(orderNo);
     }*/
+
+    @RequestMapping("/initCarInv")
+    @ResponseBody
+    @ApiOperation(value="init car inv",httpMethod="POST",notes="init inv")
+    public Result initCarInv(@RequestBody @ApiParam(name="the object of car booking",value="input the json format",required=true) CarBookingDO carBookingDO){
+        return carInfoOperateService.initCarInv(carBookingDO);
+    }
+
 }

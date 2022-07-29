@@ -1,13 +1,11 @@
 package com.demo.dao.po;
 
 
-import java.util.Date;
-
 public class CarInvDetailPO {
 
   private long id;
   private String carModelId;
-  private Date dailyDate;
+  private String dailyDate;
   private long totalQuantity;
 
   /**
@@ -40,15 +38,13 @@ public class CarInvDetailPO {
     this.carModelId = carModelId;
   }
 
-
-  public Date getDailyDate() {
+  public String getDailyDate() {
     return dailyDate;
   }
 
-  public void setDailyDate(Date dailyDate) {
+  public void setDailyDate(String dailyDate) {
     this.dailyDate = dailyDate;
   }
-
 
   public long getTotalQuantity() {
     return totalQuantity;
