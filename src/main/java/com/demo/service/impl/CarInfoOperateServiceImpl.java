@@ -101,11 +101,12 @@ public class CarInfoOperateServiceImpl implements CarInfoOperateService {
         if(!ResultUtil.isSuccess(carDateAvailableResult)){
             return carDateAvailableResult;
         }
-        //String allocateCarNo=allocateCarNo();
+        //TODO  Check whether there is an assignable car no
+        String allocateCarNo="china-223456";//allocateCarNo();
 
         //assemble rental info
         List< CarInvOperatePO > carInvOperatePOs = assembleCarInvOperateInfo(carBookingDO);
-        CarOrderPO carOrderPO = assembleCarOrderInfo(carBookingDO,"china-223456");
+        CarOrderPO carOrderPO = assembleCarOrderInfo(carBookingDO,allocateCarNo);
 
         //update the car model inventory and store order info
         return transactionTemplate.execute(new TransactionCallback<Result>() {
